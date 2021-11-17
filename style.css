@@ -1,17 +1,76 @@
 * {
     font-family: sans-serif;
-    padding: 0.2em;
 }
 
-/*
+body {
+    background-color: ghostwhite;
+    margin: 2rem 1rem;
+}
+
+#form, #output {
+    border: 2px solid lightgray;
+    margin: 0 auto 1.5rem auto;
+    padding: 2rem;
+    width: max-content;
+}
+
+#form label {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    /* text-align: center; */
+}
+
+#input, #submit {
+    /* margin: 1.5rem auto 0 auto; */
+    margin: 1.5rem 0 0 0;
+}
+
 #input {
     display: block;
+    font-size: 1.5rem;
+    padding: 1rem;
+    /* text-align: center; */
 }
-*/
+
+#submit {
+    /* background-color: hsl(220, 100%, 50%); */
+    /* border: 1px solid #000; */
+    /* color: whitesmoke; */
+    /* display: block; */
+    /* font-family: Consolas, monospace; */
+    font-size: 1.5rem;
+    /* font-weight: bold; */
+    padding: 1rem 2rem;
+    /* text-transform: uppercase; */
+}
+
+#tests {
+    padding: 1rem 2rem;
+}
 
 #output div {
     background-color: gold;
-    float: left;
-    margin: 0.5em;
-    padding: 0.5em;
+    display: inline-block;
+    font-size: 2rem;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+#output h2 {
+    margin-top: 0;
+}
+
+#message {
+    padding: 0.5rem;
+}
+
+.neutral {
+    background-color: lightgrey;
+    color: grey;
+}
+
+.error {
+    background-color: lightsalmon;
+    color: darkred;
 }
