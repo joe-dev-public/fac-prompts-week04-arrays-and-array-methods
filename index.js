@@ -1,3 +1,14 @@
+/*
+
+    Todo:
+
+
+    Low priority:
+        - Add more tests/complete this bit.
+        - Put tests in another script and import/include. Don't clog the main script :)
+
+*/
+
 function windowLoaded() {
 
     const formElement = document.getElementById('form');
@@ -39,10 +50,12 @@ function windowLoaded() {
 
     function prepareArray(str) {
 
-        // todo: trim whitespace properly
-        let arr = str.split(", ");
+        // split by commas
+        let arr = str.split(/ *, */);
 
-        //console.log(arr);
+        // "quirks": last item can be empty or have trailing spaces; first item can have leading spaces (neither affects maths afaik).
+
+        // console.log(arr);
 
         return arr;
 
@@ -54,7 +67,7 @@ function windowLoaded() {
         // todo: implement this as a pattern attribute of the <input>?
 
         // valid input: (start)(0+ spaces)[(1+ digits)(0+ spaces)(exactly 1 comma)(0+ spaces)](1 or more times)(end)
-        let re1 = new RegExp(/(^ *(\d+ *, *)+$)/);
+        let re1 = new RegExp(/^ *(\d+ *, *)+$/);
 
         if (re1.test(str) === true){
 
@@ -63,7 +76,7 @@ function windowLoaded() {
         } else {
 
             // do we just need to handle the "no final comma" case"?
-            let re2 = new RegExp(/^(.*)(\d+ *)$/);
+            let re2 = new RegExp(/^ *(\d+ *, *)+ *(\d+ *)$/);
 
             if (re2.test(str) === true){
                 return true;
@@ -230,9 +243,9 @@ function windowLoaded() {
 
         if (validateInput(str) === true){
 
-            displayError('pass');
+            //displayError('pass');
 
-/* 
+
             let arr = prepareArray(str);
 
             if (method === 'filter'){
@@ -240,7 +253,7 @@ function windowLoaded() {
             } else if (method === 'reduce'){
                 displayResult(reduceMethod(arr), false);
             }
- */
+
 
         } else {
 
