@@ -1,6 +1,7 @@
 /* 
 
     Todo:
+        - Mobile! (As with week 03 prompt.)
         - Improve appearance of results a bit.
         - Tweak tests stuff/message feedback.
 
@@ -15,6 +16,10 @@ body {
     margin: 2rem 1rem;
 }
 
+.hidden {
+    display: none;
+}
+
 #form, #output {
     border: 2px solid lightgray;
     margin: 0 auto 1.5rem auto;
@@ -26,11 +31,9 @@ body {
     display: block;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    /* text-align: center; */
 }
 
-#input, #submit {
-    /* margin: 1.5rem auto 0 auto; */
+#input {
     margin: 1.5rem 0 0 0;
 }
 
@@ -38,26 +41,36 @@ body {
     display: block;
     font-size: 1.5rem;
     padding: 1rem;
-    /* text-align: center; */
+}
+
+#buttons {
+    /* background-color: lightgrey; */
+    display: flex;
+    justify-content: space-between;
+}
+
+#submit, #tests {
+    /* display: inline-block; */
 }
 
 #submit {
-    /* background-color: hsl(220, 100%, 50%); */
-    /* border: 1px solid #000; */
-    /* color: whitesmoke; */
-    /* display: block; */
-    /* font-family: Consolas, monospace; */
     font-size: 1.5rem;
-    /* font-weight: bold; */
     padding: 1rem 2rem;
-    /* text-transform: uppercase; */
 }
 
 #tests {
+    align-self: end;
+    background-color: lightyellow;
+    /* border-radius: 0; */
+    opacity: 50%;
     padding: 1rem 2rem;
 }
 
-#output div {
+#tests:hover {
+    opacity: 100%;
+}
+
+#output .result {
     background-color: gold;
     display: inline-block;
     font-size: 2rem;
@@ -71,6 +84,18 @@ body {
 
 #message {
     padding: 0.5rem;
+}
+
+#message h3 {
+    margin-top: 0;
+}
+
+#message p {
+    margin: 0;
+}
+
+#message code {
+    font-family: monospace;
 }
 
 .neutral {

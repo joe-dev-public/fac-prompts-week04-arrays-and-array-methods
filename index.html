@@ -8,6 +8,9 @@
         Todo:
             - Add a "pattern" attribute to the text <input>?
 
+        Notes:
+            - Having type="button" on the "tests" button means it won't submit the form, i.e. browser won't complain if text input is empty.
+
     -->
 
     <head>
@@ -34,13 +37,16 @@
                 <input type="radio" name="method" value="reduce" required>
                 <strong>reduce:</strong> show the total
             </label>
-            <button id="submit">Submit</button>
-            <button id="tests">Run tests</button>
+            <div id="buttons">
+                <button id="submit" type="submit">Submit</button>
+                <button id="tests" type="button">Run tests</button>
+            </div>
         </form>
 
         <div id="output">
             <h2>Results:</h2>
-            <span id="message" class="neutral">(will appear here)</span>
+            <div id="message" class="neutral"><p>(will appear here)</p></div>
+            <div id="results"></div>
         </div>
 
     </body>

@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 
     Todo:
@@ -6,6 +8,11 @@
     Low priority:
         - Add more tests/complete this bit.
         - Put tests in another script and import/include. Don't clog the main script :)
+            - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+
+
+    Stuff to learn:
+        - Could that slightly unwieldy 3-stage validation check just be one cool regexp?
 
 */
 
@@ -16,7 +23,8 @@ function windowLoaded() {
     const submitElement = document.getElementById('submit');
     const methodElements = document.getElementsByName('method');
     const testsElement = document.getElementById('tests');
-    const outputElement = document.getElementById('output');
+    const outputElement = document.getElementById('output'); // No longer used?
+    const resultsElement = document.getElementById('results');
     const messageElement = document.getElementById('message');
 
     formElement.onsubmit = function(event) { event.preventDefault(); }
@@ -55,7 +63,7 @@ function windowLoaded() {
 
         // "quirks": last item can be empty or have trailing spaces; first item can have leading spaces (neither affects maths afaik).
 
-        // console.log(arr);
+        //console.log(arr);
 
         return arr;
 
@@ -64,24 +72,29 @@ function windowLoaded() {
 
     function validateInput(str) {
 
-        // todo: implement this as a pattern attribute of the <input>?
-
         // valid input: (start)(0+ spaces)[(1+ digits)(0+ spaces)(exactly 1 comma)(0+ spaces)](1 or more times)(end)
         let re1 = new RegExp(/^ *(\d+ *, *)+$/);
 
         if (re1.test(str) === true){
-
             return true;
-
         } else {
 
-            // do we just need to handle the "no final comma" case"?
+            // Handle the "no final comma" case:
             let re2 = new RegExp(/^ *(\d+ *, *)+ *(\d+ *)$/);
 
             if (re2.test(str) === true){
                 return true;
             } else {
-                return false;
+
+                // If that fails, handle the "one number, any number of spaces, no commas" case:
+                let re3 = new RegExp(/^ *\d+ *$/);
+
+                if (re3.test(str) === true){
+                    return true;
+                } else {
+                    return false;
+                }
+
             }
 
         }
@@ -97,33 +110,44 @@ function windowLoaded() {
 
             data.forEach( element => {
 
-                html += `<div>${element}</div>`;
+                html += `<span class="result">${element}</span>`;
 
             });
 
         } else {
 
-            html = `<div>${data}</div>`;
+            html = `<span class="result">${data}</span>`;
 
         }
 
-        outputElement.innerHTML = html;
+        messageElement.classList.add('hidden');
+        resultsElement.innerHTML = html;
 
     }
 
 
-    function displayError(errmsg) {
+    function displayMessage(msg) {
 
-        messageElement.innerHTML = errmsg;
+        resultsElement.innerHTML = '';
+        messageElement.classList.remove('hidden');
 
+        messageElement.innerHTML = msg;
+
+/* 
         messageElement.classList.remove('neutral');
 
         messageElement.classList.add('error');
+ */
 
     }
 
 
     function runTests() {
+
+        // I'd like to do programmatic tests which generate prefix/suffix/both of space, comma, letter, number against all of the above, BUT
+        // the problem is you have to specify whether or not each test should pass or fail. So.. that doesn't exactly work.
+        // But you can still save some space by maybe writing down the expected results, but not coding each individual test? (See above.)
+        // Oh, and of course letter prefixes/suffixes should always fail, so you don't need to write results for that.
 
         const tests = [
             {
@@ -194,12 +218,9 @@ function windowLoaded() {
             }
         ];
 
-        // I'd like to do programmatic tests which generate prefix/suffix/both of space, comma, letter, number against all of the above, BUT
-        // the problem is you have to specify whether or not each test should pass or fail. So.. that doesn't exactly work.
-        // But you can still save some space by maybe writing down the expected results, but not coding each individual test? (See above.)
-        // Oh, and of course letter prefixes/suffixes should always fail, so you don't need to write results for that.
+        let overallResult = 'pass'; // Default overall result is to pass.
 
-        let overallResult = 'fail';
+        let output = '';
 
         for (let i = 0; i < tests.length; i++){
 
@@ -211,16 +232,19 @@ function windowLoaded() {
 
             if (check === expected) {
                 result = 'pass';
-                overallResult = 'pass';
             } else {
-                overallResult = 'fail';
+                overallResult = 'fail'; // If one test fails, the whole suite fails.
             }
 
-            console.log(`test: ${tests[i]['name']} | result: ${result}`);
+            output += `Test input: <code>"${tests[i]['content']}"</code><br>Test result: ${result}<br><br>`;
+
+            //console.log(`test: ${tests[i]['name']} | result: ${result}`);
 
         }
 
-        displayError(`tests: ${overallResult}`);
+        resultsElement.innerHTML = '';
+        messageElement.classList.remove('hidden');
+        displayMessage(`<h3>Tests: ${overallResult}</h3><p>${output}</p>`);
 
     }
 
@@ -241,24 +265,31 @@ function windowLoaded() {
 
         let str = inputElement.value;
 
-        if (validateInput(str) === true){
-
-            //displayError('pass');
-
-
-            let arr = prepareArray(str);
-
-            if (method === 'filter'){
-                displayResult(filterMethod(arr), true);
-            } else if (method === 'reduce'){
-                displayResult(reduceMethod(arr), false);
-            }
-
-
+        if (str === ''){
+            return false;
         } else {
 
-            displayError('doesn\'t validate');
+            if (validateInput(str) === true){
 
+                let arr = prepareArray(str);
+
+                if (method === 'filter'){
+                    let results = filterMethod(arr);
+                    if (results.length !== 0){
+                        displayResult(results, true);
+                    } else {
+                        displayResult("None of the numbers you entered are divisible by two.", false);
+                    }
+                } else if (method === 'reduce'){
+                    displayResult(reduceMethod(arr), false);
+                }
+
+
+            } else {
+
+                displayMessage("Only numbers, commas and spaces are allowed, and each number must be separated by a comma.");
+
+            }
 
         }
 
