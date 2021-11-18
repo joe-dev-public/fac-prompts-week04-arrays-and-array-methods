@@ -30,7 +30,7 @@ body {
     border: 2px solid lightgray;
     margin: 0 auto 1.5rem auto;
     padding: 2rem;
-    width: max-content;
+    max-width: max-content;
 }
 
 #form label {
@@ -41,6 +41,7 @@ body {
 
 #input {
     margin: 1.5rem 0 0 0;
+    width: 100%;
 }
 
 #input {
