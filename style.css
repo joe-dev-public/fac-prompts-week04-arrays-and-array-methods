@@ -16,6 +16,11 @@ body {
     margin: 2rem 1rem;
 }
 
+#everything {
+    margin: 0 auto;
+    max-width: 50rem;
+}
+
 .hidden {
     display: none;
 }
@@ -49,9 +54,11 @@ body {
     justify-content: space-between;
 }
 
+/*
 #submit, #tests {
-    /* display: inline-block; */
+    display: inline-block;
 }
+*/
 
 #submit {
     font-size: 1.5rem;

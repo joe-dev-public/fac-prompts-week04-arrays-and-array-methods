@@ -19,34 +19,39 @@
         <title>Week 04: Arrays and array methods</title>
         <link href="style.css" rel="stylesheet">
         <script src="index.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
     </head>
 
     <body>
 
-        <form id="form">
-            <label>
-                <strong>Enter a list of numbers, separated by commas:</strong>
-                <input id="input" type="text" placeholder="e.g. 1, 2, 3, etc." required autofocus />
-            </label>
-            <label>
-                <input type="radio" name="method" value="filter" required checked>
-                <strong>filter:</strong> show which numbers which are divisible by two
-            </label>
-            <label>
-                <input type="radio" name="method" value="reduce" required>
-                <strong>reduce:</strong> show the total
-            </label>
-            <div id="buttons">
-                <button id="submit" type="submit">Submit</button>
-                <button id="tests" type="button">Run tests</button>
-            </div>
-        </form>
+        <div id="everything">
 
-        <div id="output">
-            <h2>Results:</h2>
-            <div id="message" class="neutral"><p>(will appear here)</p></div>
-            <div id="results"></div>
+            <form id="form">
+                <label>
+                    <strong>Enter a list of numbers, separated by commas:</strong>
+                    <input id="input" type="text" placeholder="e.g. 1, 2, 3, etc." required autofocus />
+                </label>
+                <label>
+                    <input type="radio" name="method" value="filter" required checked>
+                    <strong>filter:</strong> show which numbers which are divisible by two
+                </label>
+                <label>
+                    <input type="radio" name="method" value="reduce" required>
+                    <strong>reduce:</strong> show the total
+                </label>
+                <div id="buttons">
+                    <button id="submit" type="submit">Submit</button>
+                    <button id="tests" type="button">Run tests</button>
+                </div>
+            </form>
+
+            <div id="output">
+                <h2>Results:</h2>
+                <div id="message" class="neutral"><p>(will appear here)</p></div>
+                <div id="results"></div>
+            </div>
+
         </div>
 
         <script>
